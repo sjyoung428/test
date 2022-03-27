@@ -27,7 +27,16 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
+	font-family: 'Roboto', sans-serif;
 	line-height: 1;
+	background-color: ${(props) => props.theme.bgColor};
+	color: ${(props) => props.theme.textColor}
+}
+a{
+	text-decoration:none;
+}
+*{
+	box-sizing:border-box;
 }
 ol, ul {
 	list-style: none;
@@ -43,6 +52,7 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
-}`;
+}
+`;
 
 export default GlobalStyle;
