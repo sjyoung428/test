@@ -1,23 +1,33 @@
+import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "tailwind-styled-components";
+import { CoinFetcher } from "../api";
+import Loading from "../components/Loading";
 
-const AccentColor = styled.h1`
+const AccentTitle = styled.h1`
   color: ${(props) => props.theme.accentColor};
+`;
+
+const AccentCoin = styled.li`
+  :hover {
+    color: ${(props) => props.theme.accentColor};
+  }
 `;
 
 const Container = tw.div`
 container
-max-w-2xl
 border-2
 border-solid
 mx-auto
-h-3/4
+h-screen
 my-6
 flex
 flex-col
-content-center
+justify-center
 items-center
 py-5
+rounded-md
 `;
 
 const CoinList = tw.ul`
@@ -28,13 +38,16 @@ divide-solid
 overflow-y-scroll
 `;
 
-const Coin = tw.li`
+const Coin = tw(AccentCoin)`
 flex
 justify-between
+items-center
 p-4
+transition-colors
+hover:cursor-pointer
 `;
 
-const Title = tw(AccentColor)`
+export const Title = tw(AccentTitle)`
 w-full
 text-center
 pb-5
@@ -45,48 +58,43 @@ border-solid
 border-[ghostwhite]
 `;
 
-const coins = [
-  {
-    id: "btc-bitcoin",
-    name: "Bitcoin",
-    symbol: "BTC",
-    rank: 1,
-    is_new: false,
-    is_active: true,
-    type: "coin",
-  },
-  {
-    id: "eth-ethereum",
-    name: "Ethereum",
-    symbol: "ETH",
-    rank: 2,
-    is_new: false,
-    is_active: true,
-    type: "coin",
-  },
-  {
-    id: "hex-hex",
-    name: "HEX",
-    symbol: "HEX",
-    rank: 3,
-    is_new: false,
-    is_active: true,
-    type: "token",
-  },
-];
+const Symbol = tw.img`
+h-[35px]
+w-[35px]
+`;
+
+interface ICoin {
+  id: string;
+  name: string;
+  symbol: string;
+  rank: number;
+  is_new: boolean;
+  is_active: boolean;
+  type: string;
+}
 
 const Coins = () => {
+  const { isLoading, data: coins } = useQuery<ICoin[]>("allCoins", CoinFetcher);
   return (
     <>
       <Container>
         <Title>Coins</Title>
         <CoinList>
-          {coins.map((coin) => (
-            <Coin key={coin.id}>
-              <span>{coin.name}</span>
-              <span>{coin.symbol}</span>
-            </Coin>
-          ))}
+          {isLoading ? (
+            <Loading />
+          ) : (
+            coins?.slice(0, 20).map((coin) => (
+              <Link key={coin.id} to={`${coin.id}`} state={{ name: coin.name }}>
+                <Coin key={coin.id}>
+                  <span>{coin.name}</span>
+                  <Symbol
+                    src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol?.toLowerCase()}`}
+                    alt="coin-icon"
+                  />
+                </Coin>
+              </Link>
+            ))
+          )}
         </CoinList>
       </Container>
     </>
