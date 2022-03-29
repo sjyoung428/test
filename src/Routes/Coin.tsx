@@ -1,30 +1,59 @@
-import { useLocation, useParams } from "react-router-dom";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Title } from "./Coins";
 import tw from "tailwind-styled-components";
+import { useQuery } from "react-query";
+import { CoinInfoFetcher } from "../api";
+import Loading from "../components/Loading";
 
-const ChartStyle = styled.div``;
+const LinkContainer = tw.div``;
 
-const PriceStyle = styled.div``;
+const TabStyle = styled.div``;
 
-const Chart = tw(ChartStyle)``;
-
-const Price = tw(PriceStyle)``;
+const Tab = tw(TabStyle)``;
 
 interface ILocation {
   state: {
     name: string;
   };
 }
+interface IInfo {
+  id: string;
+  name: string;
+  symbol: string;
+  rank: number;
+  is_new: boolean;
+  is_active: boolean;
+  type: string;
+  description: string;
+  message: string;
+  open_source: boolean;
+  started_at: string;
+  development_status: string;
+  hardware_wallet: boolean;
+  proof_type: string;
+  org_structure: string;
+  hash_algorithm: string;
+  first_data_at: Date;
+  last_data_at: Date;
+}
 
 const Coin = () => {
   const { coinId } = useParams();
-  const {
-    state: { name },
-  } = useLocation() as ILocation;
+  const { state } = useLocation() as ILocation;
+  const { data: info, isLoading } = useQuery<IInfo>(
+    "coinInfo",
+    () => CoinInfoFetcher(coinId),
+    {
+      refetchInterval: 1000,
+    }
+  );
   return (
     <>
-      <Title>{name}</Title>
+      <Title>
+        {state?.name ? state.name : isLoading ? <Loading /> : info?.name}
+      </Title>
+      <Outlet />
     </>
   );
 };
