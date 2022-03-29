@@ -1,4 +1,10 @@
-import { Link, Outlet, useLocation, useParams } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useMatch,
+  useParams,
+} from "react-router-dom";
 import styled from "styled-components";
 import { Title } from "./Coins";
 import tw from "tailwind-styled-components";
@@ -13,10 +19,12 @@ justify-around
 mt-10
 `;
 
-const TabStyle = styled.div`
+const TabStyle = styled.div<{ isMatch: boolean }>`
   :hover {
     color: ${(props) => props.theme.accentColor};
   }
+  color: ${(props) =>
+    props.isMatch ? props.theme.accentColor : props.theme.textColor};
 `;
 
 const Tab = tw(TabStyle)`
@@ -56,13 +64,11 @@ interface IInfo {
 const Coin = () => {
   const { coinId } = useParams();
   const { state } = useLocation() as ILocation;
-  const { data: info, isLoading } = useQuery<IInfo>(
-    "coinInfo",
-    () => CoinInfoFetcher(coinId),
-    {
-      refetchInterval: 1000,
-    }
+  const { data: info, isLoading } = useQuery<IInfo>("coinInfo", () =>
+    CoinInfoFetcher(coinId)
   );
+  const chartMatch = Boolean(useMatch("/:id/chart"));
+  const priceMatch = Boolean(useMatch("/:id/price"));
   return (
     <>
       <Title>
@@ -70,10 +76,10 @@ const Coin = () => {
       </Title>
       <LinkContainer>
         <Link to="chart">
-          <Tab>Chart</Tab>
+          <Tab isMatch={chartMatch}>Chart</Tab>
         </Link>
         <Link to="price">
-          <Tab>Price</Tab>
+          <Tab isMatch={priceMatch}>Price</Tab>
         </Link>
       </LinkContainer>
       <Outlet />
