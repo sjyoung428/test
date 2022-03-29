@@ -6,11 +6,26 @@ import { useQuery } from "react-query";
 import { CoinInfoFetcher } from "../api";
 import Loading from "../components/Loading";
 
-const LinkContainer = tw.div``;
+const LinkContainer = tw.div`
+container
+flex
+justify-around
+mt-10
+`;
 
-const TabStyle = styled.div``;
+const TabStyle = styled.div`
+  :hover {
+    color: ${(props) => props.theme.accentColor};
+  }
+`;
 
-const Tab = tw(TabStyle)``;
+const Tab = tw(TabStyle)`
+px-6
+py-4
+border
+border-solid
+rounded-md
+`;
 
 interface ILocation {
   state: {
@@ -53,6 +68,14 @@ const Coin = () => {
       <Title>
         {state?.name ? state.name : isLoading ? <Loading /> : info?.name}
       </Title>
+      <LinkContainer>
+        <Link to="chart">
+          <Tab>Chart</Tab>
+        </Link>
+        <Link to="price">
+          <Tab>Price</Tab>
+        </Link>
+      </LinkContainer>
       <Outlet />
     </>
   );
