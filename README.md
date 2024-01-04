@@ -28,3 +28,9 @@ npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @testing-
     "testEnvironment": "jest-environment-jsdom"
   },
 ```
+
+## Cypress
+
+```bash
+npm install --save-dev cypress
+```
