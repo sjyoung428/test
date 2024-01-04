@@ -1,5 +1,15 @@
 # Test
 
+## Nock
+
+- Http Request를 mock
+
+[깃허브 링크](https://github.com/nock/nock)
+
+```bash
+npm install --save-dev nock
+```
+
 ## Jest 설치
 
 ```bash
