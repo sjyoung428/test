@@ -34,3 +34,22 @@ npm install --save-dev jest @types/jest ts-jest jest-environment-jsdom @testing-
 ```bash
 npm install --save-dev cypress
 ```
+
+### Cypress 설정
+
+```json
+"scripts": {
+    ...
+    "cypress": "npx cypress open",
+    ...
+  },
+```
+
+```js
+export default defineConfig({
+  e2e: {
+    baseUrl: "http://localhost:5173",
+    ...
+  },
+});
+```
