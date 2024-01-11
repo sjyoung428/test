@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { newOrderState } from "atoms/order";
 import useRestaurantDetail from "hooks/useRestaurantDetail";
-import { useOrder } from "libs/order";
+
 import { flexColumn, flexRow } from "mixins/styles";
 import { IMenu } from "mixins/types";
 import { useNavigate, useParams } from "react-router-dom";
@@ -34,7 +34,7 @@ export default function RestaurantDetailPage() {
     <Wrapper>
       <RestaurantName>{restaurant?.name}</RestaurantName>
       {restaurant?.menu_set.map((menu) => (
-        <MenuWrap onClick={() => handleMenuClick(menu)}>
+        <MenuWrap data-cy={menu.id} onClick={() => handleMenuClick(menu)}>
           <MenuInfo>
             <MenuName>{menu.name}</MenuName>
             <MenuDescription>{menu.description}</MenuDescription>

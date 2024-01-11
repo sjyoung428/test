@@ -6,6 +6,7 @@ import { MouseEventHandler } from "react";
 interface IOrderType {
   orderType: OrderCategory;
   icon: string;
+  testId: string;
   handleOrderTypeClick: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -17,10 +18,11 @@ const orderCategory = {
 export default function OrderType({
   orderType,
   icon,
+  testId,
   handleOrderTypeClick,
 }: IOrderType) {
   return (
-    <OrderTypeBtn onClick={handleOrderTypeClick}>
+    <OrderTypeBtn onClick={handleOrderTypeClick} data-cy={testId}>
       <img
         width={40}
         height={40}
