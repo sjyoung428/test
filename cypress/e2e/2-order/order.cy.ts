@@ -70,4 +70,27 @@ describe("주문유형 선택", () => {
 
     cy.url().should("include", "/food-type/1");
   });
+
+  it("사용자가 원하는 음식점을 선택할 수 있다.", () => {
+    cy.visit("/food-type/1");
+
+    cy.intercept(
+      {
+        method: "GET",
+        url: "/restaurant/food-type/1",
+      },
+      {
+        fixture: "restaurant-list.json",
+      }
+    );
+
+    cy.fixture("restaurant-list.json").then((restaurantList) => {
+      cy.get(`[data-cy=${restaurantList[0].id}]`)
+        .should("be.visible")
+        .as("restaurantBtn");
+      cy.get("@restaurantBtn").click();
+
+      cy.url().should("include", "/restaurant/1");
+    });
+  });
 });
