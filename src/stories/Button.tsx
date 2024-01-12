@@ -1,7 +1,6 @@
-import React from "react";
-import "./button.css";
+import React from 'react';
+import './button.css';
 
-import styled from "@emotion/styled";
 interface ButtonProps {
   /**
    * Is this the principal call to action on the page?
@@ -14,7 +13,7 @@ interface ButtonProps {
   /**
    * How large should the button be?
    */
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
   /**
    * Button contents
    */
@@ -22,8 +21,6 @@ interface ButtonProps {
   /**
    * Optional click handler
    */
-  disabled?: boolean;
-
   onClick?: () => void;
 }
 
@@ -32,36 +29,20 @@ interface ButtonProps {
  */
 export const Button = ({
   primary = false,
-  size = "medium",
+  size = 'medium',
   backgroundColor,
-  disabled = false,
   label,
   ...props
 }: ButtonProps) => {
-  const mode = primary
-    ? "storybook-button--primary"
-    : "storybook-button--secondary";
+  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
   return (
-    <Test
+    <button
       type="button"
-      disabled={disabled}
-      // className={["storybook-button", `storybook-button--${size}`, mode].join(
-      //   " "
-      // )}
+      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
       style={{ backgroundColor }}
       {...props}
     >
       {label}
-    </Test>
+    </button>
   );
 };
-
-const Test = styled.button`
-  outline: none;
-  border: none;
-  border-radius: 5px;
-  width: 230px;
-  &:hover {
-    background-color: red;
-  }
-`;

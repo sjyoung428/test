@@ -53,3 +53,11 @@ export default defineConfig({
   },
 });
 ```
+
+## Story book
+
+### 설치
+
+```bash
+npx storybook@latest init
+```

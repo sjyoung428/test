@@ -20,6 +20,7 @@ module.exports = {
     "eslint-config-prettier",
     "plugin:react/recommended",
     "plugin:cypress/recommended",
+    "plugin:storybook/recommended"
   ],
   plugins: ["@typescript-eslint", "import", "prettier", "react", "react-hooks"],
   settings: { react: { version: "detect" } },
