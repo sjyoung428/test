@@ -53,7 +53,7 @@ export default function OrderDetailPage() {
     <Wrapper>
       <Title>{restaurant.name}</Title>
       {newOrder.map((menu) => (
-        <MenuWrap>
+        <MenuWrap key={menu.id}>
           <img alt={menu.name} src={menu.picture} width={100} height={100} />
           <MenuInfo>
             <MenuName>{menu.name}</MenuName>
